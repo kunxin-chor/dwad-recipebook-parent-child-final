@@ -60,16 +60,14 @@ export default class RecipeBook extends React.Component {
     });
   };
 
-  addNew = () => {
+ addNew = async () => {
+    let response = await axios.post(this.url + "recipes", {
+      title: this.state.newTitle,
+      ingredients: this.state.newIngredients.split(",")
+    });
+
     this.setState({
-      data: [
-        ...this.state.data,
-        {
-          _id: Math.floor(Math.random() * 10000),
-          title: this.state.newTitle,
-          ingredients: this.state.newIngredients.split(",")
-        }
-      ],
+      data: [...this.state.data, response.data[0]],
       active: "listing"
     });
   };
